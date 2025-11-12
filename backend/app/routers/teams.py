@@ -5,25 +5,25 @@ router = APIRouter()
 
 @router.post("/teams/")
 def create_team(team: dict):
-    result = supabase.table("Team").insert(team).execute()
+    result = supabase.table("Teams").insert(team).execute()
     return result.data
 
 @router.get("/teams/")
 def get_teams():
-    result = supabase.table("Team").select("*").execute()
+    result = supabase.table("Teams").select("*").execute()
     return result.data
 
 @router.get("/teams/{team_id}")
 def get_team(team_id: str):
-    result = supabase.table("Team").select("*").eq("id", team_id).single().execute()
+    result = supabase.table("Teams").select("*").eq("id", team_id).single().execute()
     return result.data
 
 @router.put("/teams/{team_id}")
 def update_team(team_id: str, team: dict):
-    result = supabase.table("Team").update(team).eq("id", team_id).execute()
+    result = supabase.table("Teams").update(team).eq("id", team_id).execute()
     return result.data
 
 @router.delete("/teams/{team_id}")
 def delete_team(team_id: str):
-    result = supabase.table("Team").delete().eq("id", team_id).execute()
+    result = supabase.table("Teams").delete().eq("id", team_id).execute()
     return {"deleted": result.data}
