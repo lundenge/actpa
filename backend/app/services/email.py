@@ -132,6 +132,8 @@ class EmailService:
 		cc: Optional[List[str]] = None,
 		bcc: Optional[List[str]] = None,
 		from_address: Optional[str] = None,
+		reply_to: Optional[str] = None,
+		headers: Optional[Dict[str, str]] = None,
 	) -> None:
 		"""Send an email via SMTP (blocking).
 
@@ -142,6 +144,12 @@ class EmailService:
 		msg = EmailMessage()
 		msg["Subject"] = subject
 		msg["From"] = from_address
+		if reply_to:
+			msg["Reply-To"] = reply_to
+		if headers:
+			for k, v in headers.items():
+				# allow overriding or adding arbitrary headers
+				msg[k] = v
 		msg["To"] = ", ".join(to_addresses)
 		if cc:
 			msg["Cc"] = ", ".join(cc)
